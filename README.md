@@ -206,6 +206,6 @@ Distribuido bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detall
 
 **⭐ Si te gusta PyQuest, ¡no olvides darle una estrella! ⭐**
 
-*Hecho con ❤️ por [Engel](https://github.com/DuvanGomezC/PyQuest)*
+*Hecho con ❤️ por [Engel](https://github.com/DuvanGomezC)*
 
 </div>
