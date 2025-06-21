@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyQuest - Aprende Python en 30 días</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="login-page" class="login-page">
+        <div class="login-container">
+            <h1>Py<span class="neon-glow">Quest</span></h1>
+            <p>Aprende Python en 30 días</p>
+            <input type="email" id="email" placeholder="Ingresa tu email de aventurero">
+            <input type="password" id="password" placeholder="Contraseña">
+            <button id="login-btn">Comenzar la Aventura</button>
+            <button id="signup-btn">Registrarse</button>
+
+        </div>
+    </div>
+
+    <div id="game-page" class="container" style="display: none;">
+        <header class="game-header">
+            <div class="user-info">
+                <span id="username-display">
+                    <span class="user-icon">👨‍💻</span>
+                    <span id="user-name"></span>
+                </span>
+                <button class="logout-btn" id="logout-btn">Cerrar Sesión</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-bar-inner" id="progress-bar"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Día <span id="current-day">1</span> de 30</span>
+                    <span>Ejercicio <span id="current-exercise">1</span></span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-content">
+            <div class="theory-examples">
+                <div class="theory-header">
+                    <h2 class="exercise-title">Día <span id="theory-day-number">1</span>: <span
+                            id="theory-exercise-title">¡Bienvenido a PyQuest!</span></h2>
+                </div>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="theory">Teoría</button>
+                    <button class="tab-btn" data-tab="example">Ejemplo</button>
+                </div>
+                <div class="tab-content">
+                    <div id="theory-content" class="tab-pane active"></div>
+                    <div id="example-content" class="tab-pane"></div>
+                </div>
+            </div>
+
+            <section class="exercise-info">
+                <div class="exercise-content">
+                    <div class="exercise-description" id="exercise-description">
+                        <div class="section-title">Desafío</div>
+                        <p id="challenge-text">Tu primer desafío: Imprime "Hola, mundo!" en la consola usando la función
+                            print().</p>
+                        <div id="boss-indicator" style="display: none;">
+                            <div class="boss-badge">¡Jefe Final! Combina lo aprendido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="achievements-section">
+                    <h2><span class="concept-icon">🏆</span> Logros Desbloqueados</h2>
+                    <div class="achievements-grid" id="achievements-grid">
+                    </div>
+                </section>
+            </section>
+
+            <section class="code-section">
+                <div class="editor-container">
+                    <div class="editor-header">
+                        <h3><span class="concept-icon">💻</span> Tu Código Python</h3>
+                    </div>
+                    <textarea id="code-editor" spellcheck="false"
+                        autocapitalize="off"># Escribe tu código aquí print("Hola, mundo!")</textarea>
+                </div>
+
+                <div class="console-container">
+                    <div class="console-header">
+                        <h3><span class="concept-icon">📟</span> Consola de Salida</h3>
+                        <span id="console-status">▶ Lista para ejecutar</span>
+                    </div>
+                    <pre id="console-output"></pre>
+                </div>
+
+                <div class="controls">
+                    <button id="run-code" class="control-btn">▶ Ejecutar Código</button>
+                    <button id="verify-answer" class="control-btn" disabled>✅ Verificar Respuesta</button>
+                    <button id="next-exercise" class="control-btn" disabled>➡️ Siguiente Ejercicio</button>
+                    <button id="hint-btn" class="control-btn">💡 Mostrar Pista</button>
+                    <button id="clear-console" class="control-btn">🧹 Limpiar Consola</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="copyright-text">
+            <p>PyQuest. Todos los derechos reservados. ©Engel</p>
+            <p></p>para obtener un usuario escribeme a engelsmirty.f27@gmail.com</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

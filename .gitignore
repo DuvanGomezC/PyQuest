@@ -1,0 +1,24 @@
+# Archivos de configuración sensibles
+config.js
+
+# Node modules
+node_modules/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de log
+*.log
+
+# Archivos temporales
+*.tmp
+*.swp
+
+# Archivos de entorno
+.env
+.env.*
+
+# Salidas de compilación/dist
+/dist/
+/build/

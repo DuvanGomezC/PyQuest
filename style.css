@@ -1,0 +1,1302 @@
+   :root {
+       --neon-blue: #00f7ff;
+       --neon-purple: #bd00ff;
+       --neon-green: #39ff14;
+       --neon-pink: #ff00ff;
+       --neon-yellow: #fff01f;
+       --dark-bg: #0a0a16;
+       --darker-bg: #050510;
+       --light-text: #f0f0f0;
+       --card-bg: rgba(25, 25, 60, 0.85);
+       --success: #4CAF50;
+       --warning: #FFC107;
+       --error: #F44336;
+       --info: #2196F3;
+   }
+
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       /* Scrollbar para Firefox */
+       scrollbar-width: thin;
+       scrollbar-color: rgba(0, 247, 255, 0.6) rgba(10, 10, 30, 0.5);
+   }
+
+   /* SCROLLBAR GLOBAL PERSONALIZADO */
+   /* Webkit browsers (Chrome, Safari, Edge) */
+   ::-webkit-scrollbar {
+       width: 12px;
+       height: 12px;
+   }
+
+   ::-webkit-scrollbar-track {
+       background: rgba(10, 10, 30, 0.5);
+       border-radius: 10px;
+       border: 1px solid rgba(0, 247, 255, 0.1);
+   }
+
+   ::-webkit-scrollbar-thumb {
+       background: linear-gradient(180deg,
+               rgba(0, 247, 255, 0.8) 0%,
+               rgba(0, 200, 255, 0.6) 50%,
+               rgba(0, 150, 255, 0.4) 100%);
+       border-radius: 10px;
+       border: 1px solid rgba(0, 247, 255, 0.3);
+       box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+       background: linear-gradient(180deg,
+               rgba(0, 247, 255, 1) 0%,
+               rgba(0, 200, 255, 0.8) 50%,
+               rgba(0, 150, 255, 0.6) 100%);
+       box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+   }
+
+   ::-webkit-scrollbar-thumb:active {
+       background: linear-gradient(180deg,
+               rgba(0, 255, 255, 1) 0%,
+               rgba(0, 220, 255, 0.9) 50%,
+               rgba(0, 180, 255, 0.7) 100%);
+       box-shadow: 0 0 20px rgba(0, 247, 255, 0.7);
+   }
+
+   ::-webkit-scrollbar-corner {
+       background: rgba(10, 10, 30, 0.5);
+   }
+
+   /* Scroll suave global */
+   html {
+       scroll-behavior: smooth;
+   }
+
+   body {
+       background-color: var(--dark-bg);
+       color: var(--light-text);
+       line-height: 1.6;
+       min-height: 100vh;
+       background-image:
+           radial-gradient(circle at top right, rgba(189, 0, 255, 0.1), transparent 25%),
+           radial-gradient(circle at bottom left, rgba(0, 247, 255, 0.1), transparent 25%),
+           linear-gradient(to bottom, #0a0a16, #050510);
+       background-attachment: fixed;
+   }
+
+   .container {
+       max-width: 1200px;
+       margin: 0 auto;
+       padding: 20px;
+   }
+
+   /* Login Page */
+   .login-page {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       min-height: 100vh;
+       text-align: center;
+       background-image:
+           radial-gradient(circle at center, rgba(0, 247, 255, 0.05), transparent 70%),
+           radial-gradient(circle at 20% 80%, rgba(189, 0, 255, 0.05), transparent 50%);
+   }
+
+   .login-container {
+       background: var(--card-bg);
+       padding: 40px;
+       border-radius: 20px;
+       border: 2px solid var(--neon-purple);
+       box-shadow: 0 0 30px var(--neon-purple);
+       width: 90%;
+       max-width: 500px;
+       backdrop-filter: blur(10px);
+       animation: glow 3s infinite alternate;
+   }
+
+   @keyframes glow {
+       0% {
+           box-shadow: 0 0 15px var(--neon-purple);
+       }
+
+       50% {
+           box-shadow: 0 0 30px var(--neon-blue);
+       }
+
+       100% {
+           box-shadow: 0 0 20px var(--neon-pink);
+       }
+   }
+
+   .login-container h1 {
+       font-size: 3.5rem;
+       margin-bottom: 10px;
+       color: var(--neon-blue);
+       text-shadow: 0 0 10px var(--neon-blue);
+       letter-spacing: 2px;
+       background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+   }
+
+   .login-container p {
+       font-size: 1.5rem;
+       margin-bottom: 30px;
+       color: var(--neon-green);
+   }
+
+   #username {
+       width: 100%;
+       padding: 15px;
+       margin-bottom: 20px;
+       border: 1px solid var(--neon-blue);
+       border-radius: 8px;
+       background: rgba(10, 10, 30, 0.8);
+       color: white;
+       font-size: 1.2rem;
+       outline: none;
+       transition: all 0.3s;
+   }
+
+   #username:focus {
+       box-shadow: 0 0 15px var(--neon-blue);
+       transform: scale(1.02);
+   }
+
+   #login-btn {
+       width: 100%;
+       padding: 15px;
+       background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+       border: none;
+       border-radius: 8px;
+       color: white;
+       font-size: 1.2rem;
+       font-weight: bold;
+       cursor: pointer;
+       transition: transform 0.2s, box-shadow 0.2s;
+       position: relative;
+       overflow: hidden;
+   }
+
+   #login-btn::after {
+       content: '';
+       position: absolute;
+       top: -50%;
+       left: -50%;
+       width: 200%;
+       height: 200%;
+       background: rgba(255, 255, 255, 0.1);
+       transform: rotate(30deg);
+       transition: all 0.5s;
+   }
+
+   #login-btn:hover {
+       transform: translateY(-5px);
+       box-shadow: 0 8px 25px rgba(0, 247, 255, 0.6);
+   }
+
+   #login-btn:hover::after {
+       transform: rotate(30deg) translate(20%, 20%);
+   }
+
+   /* Game Page */
+   .game-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 20px 0;
+       border-bottom: 1px solid var(--neon-purple);
+       margin-bottom: 30px;
+       flex-wrap: wrap;
+   }
+
+   .user-info {
+       display: flex;
+       align-items: center;
+       gap: 15px;
+   }
+
+   #username-display {
+       font-size: 1.3rem;
+       color: var(--neon-green);
+       text-shadow: 0 0 5px var(--neon-green);
+       background: rgba(0, 0, 0, 0.3);
+       padding: 8px 15px;
+       border-radius: 30px;
+       display: flex;
+       align-items: center;
+   }
+
+   .user-icon {
+       margin-right: 8px;
+       font-size: 1.5rem;
+   }
+
+   .logout-btn {
+       background: rgba(189, 0, 255, 0.2);
+       border: 1px solid var(--neon-purple);
+       color: var(--light-text);
+       padding: 8px 15px;
+       border-radius: 30px;
+       cursor: pointer;
+       transition: all 0.3s;
+       font-weight: bold;
+   }
+
+   .logout-btn:hover {
+       background: rgba(189, 0, 255, 0.4);
+       box-shadow: 0 0 10px var(--neon-purple);
+   }
+
+   .progress-container {
+       width: 70%;
+       max-width: 500px;
+   }
+
+   .progress-bar {
+       height: 20px;
+       background: var(--darker-bg);
+       border-radius: 10px;
+       overflow: hidden;
+       border: 1px solid var(--neon-blue);
+       margin-bottom: 8px;
+       position: relative;
+   }
+
+   .progress-bar-inner {
+       height: 100%;
+       background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+       border-radius: 10px;
+       width: 0%;
+       transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+       position: relative;
+       overflow: hidden;
+   }
+
+   .progress-bar-inner::after {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: -100%;
+       width: 50%;
+       height: 100%;
+       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+       animation: progress-shine 2s infinite;
+   }
+
+   @keyframes progress-shine {
+       100% {
+           left: 150%;
+       }
+   }
+
+   .progress-text {
+       text-align: center;
+       font-size: 1.1rem;
+       color: var(--neon-pink);
+       display: flex;
+       justify-content: space-between;
+   }
+
+   .game-content {
+       display: flex;
+       gap: 30px;
+       margin-bottom: 30px;
+       flex-wrap: wrap;
+   }
+
+   .exercise-info {
+       flex: 1;
+       min-width: 300px;
+       min-height: 400px;
+       background: var(--card-bg);
+       padding: 25px;
+       border-radius: 20px;
+       border: 2px solid var(--neon-blue);
+       box-shadow:
+           0 0 30px rgba(0, 247, 255, 0.4),
+           inset 0 0 20px rgba(0, 247, 255, 0.1);
+       backdrop-filter: blur(10px);
+       position: relative;
+       overflow: hidden;
+       transition: all 0.3s ease;
+       display: flex;
+       flex-direction: column;
+
+       /* Animaciones múltiples para máximo impacto visual */
+       animation:
+           border-pulse 2s ease-in-out infinite alternate,
+           gentle-float 4s ease-in-out infinite;
+   }
+
+   /* 2. Hacer que el contenido del ejercicio sea scrolleable si es necesario */
+   .exercise-content {
+       flex-grow: 1;
+       overflow-y: auto;
+       margin-bottom: 20px;
+   }
+
+   /* 3. Modificar la sección de logros para que esté dentro de exercise-info */
+   .achievements-section {
+       background: rgba(25, 25, 60, 0.6);
+       padding: 20px;
+       border-radius: 12px;
+       border: 1px solid var(--neon-pink);
+       box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+       backdrop-filter: blur(3px);
+       margin-top: 15px;
+   }
+
+   .achievements-section h2 {
+       color: var(--neon-pink);
+       margin-bottom: 15px;
+       text-align: center;
+       text-shadow: 0 0 5px var(--neon-pink);
+       font-size: 1.4rem;
+   }
+
+   /* 4. Hacer la grilla de logros más compacta y con scroll */
+   .achievements-grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+       gap: 15px;
+       max-height: 300px;
+       overflow-y: auto;
+       padding-right: 10px;
+   }
+
+   /* 5. Hacer los logros un poco más pequeños */
+   .achievement {
+       background: rgba(0, 0, 0, 0.4);
+       border-radius: 8px;
+       padding: 12px;
+       text-align: center;
+       border: 1px solid rgba(255, 255, 255, 0.1);
+       transition: transform 0.3s, box-shadow 0.3s;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+
+   .achievement-icon {
+       font-size: 2.5rem;
+       margin-bottom: 8px;
+       color: var(--neon-yellow);
+       text-shadow: 0 0 8px var(--neon-yellow);
+   }
+
+   .achievement-title {
+       font-size: 0.9rem;
+       margin-bottom: 4px;
+       font-weight: bold;
+   }
+
+   .achievement-description {
+       font-size: 0.75rem;
+       color: #ccc;
+       margin-bottom: 6px;
+       flex-grow: 1;
+   }
+
+   .achievement-date {
+       font-size: 0.7rem;
+       color: #aaa;
+   }
+
+
+   .exercise-title {
+       color: var(--neon-blue);
+       margin-bottom: 20px;
+       font-size: 1.8rem;
+       text-shadow: 0 0 5px var(--neon-blue);
+       display: flex;
+       align-items: center;
+       gap: 10px;
+   }
+
+   .section-title {
+       color: var(--neon-green);
+       margin: 20px 0 10px;
+       font-size: 1.8rem;
+       font-weight: bold;
+       text-shadow: 0 0 10px var(--neon-green),
+           0 0 20px var(--neon-green),
+           0 0 30px var(--neon-green);
+
+       text-transform: uppercase;
+       letter-spacing: 2px;
+
+       display: flex;
+       align-items: center;
+       gap: 8px;
+   }
+
+   .section-title::before {
+       content: '»';
+       color: var(--neon-yellow);
+   }
+
+   .exercise-description {
+       margin-bottom: 10px;
+       line-height: 1.7;
+   }
+
+   /* texto dentro de teoria y ejemplo */
+   .theory-box {
+       background: rgba(10, 20, 40, 0.5);
+       border-left: 3px solid var(--neon-blue);
+       padding: 15px;
+       padding-left: 23px;
+       margin: 15px 0;
+       border-radius: 0 8px 8px 0;
+   }
+
+   .example-box {
+       background: rgba(20, 10, 40, 0.5);
+       border-left: 3px solid var(--neon-purple);
+       padding: 15px;
+       margin: 15px 0;
+       border-radius: 0 8px 8px 0;
+       font-family: monospace;
+       white-space: pre-wrap;
+       line-height: 1.5;
+   }
+
+   .boss-badge {
+       display: inline-block;
+       background: linear-gradient(45deg, #ff0000, #ff8800);
+       padding: 8px 15px;
+       border-radius: 30px;
+       font-weight: bold;
+       margin-top: 10px;
+       animation: pulse 2s infinite;
+       font-size: 1.1rem;
+   }
+
+   .code-section {
+       flex: 2;
+       min-width: 300px;
+       display: flex;
+       flex-direction: column;
+       gap: 20px;
+   }
+
+   .editor-container {
+       flex: 1;
+       display: flex;
+       flex-direction: column;
+       background: var(--card-bg);
+       border-radius: 15px;
+       border: 1px solid var(--neon-purple);
+       box-shadow: 0 0 20px rgba(189, 0, 255, 0.3);
+       overflow: hidden;
+       backdrop-filter: blur(5px);
+   }
+
+   .editor-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 15px;
+       background: rgba(189, 0, 255, 0.2);
+       border-bottom: 1px solid var(--neon-purple);
+   }
+
+   .editor-header h3 {
+       color: var(--neon-green);
+       display: flex;
+       align-items: center;
+       gap: 8px;
+   }
+
+   /* entrada de texto de la consola */
+   #code-editor {
+       width: 100%;
+       flex: 1;
+       padding: 20px;
+       background: rgba(10, 10, 30, 0.7);
+       border: none;
+       color: white;
+       font-family: 'Fira Code', monospace;
+       font-size: 1.1rem;
+       resize: none;
+       outline: none;
+       line-height: 1.5;
+       min-height: 300px;
+       max-height: 400px;
+   }
+
+   #code-editor:focus {
+       box-shadow: inset 0 0 10px rgba(189, 0, 255, 0.5);
+   }
+
+   /* salida de texto de la consola */
+   .console-container {
+       background: rgba(0, 0, 0, 0.85);
+       border: 1px solid var(--neon-green);
+       border-radius: 15px;
+       padding: 20px;
+       min-height: 300px;
+       max-height: 400px;
+       overflow-y: auto;
+       box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+       font-family: monospace;
+       white-space: pre-wrap;
+       word-wrap: break-word;
+       overflow-wrap: break-word;
+       line-height: 1.5;
+   }
+
+   /* controla y evita que el texto siga en una sola linea */
+   #console-output {
+       font-family: 'Fira Code', monospace;
+       white-space: pre-wrap;
+       word-wrap: break-word;
+       overflow-wrap: break-word;
+       word-break: break-all;
+       /* Fuerza el quiebre incluso en palabras largas */
+   }
+
+
+   .console-header {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin-bottom: 10px;
+       padding-bottom: 8px;
+       border-bottom: 1px solid rgba(57, 255, 20, 0.3);
+   }
+
+   .console-header h3 {
+       color: var(--neon-green);
+   }
+
+   .controls {
+       display: flex;
+       gap: 15px;
+       flex-wrap: wrap;
+   }
+
+   .control-btn {
+       flex: 1;
+       min-width: 120px;
+       padding: 15px;
+       font-size: 1.1rem;
+       border-radius: 8px;
+       border: none;
+       color: white;
+       cursor: pointer;
+       transition: transform 0.2s, box-shadow 0.2s;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       gap: 8px;
+       font-weight: bold;
+   }
+
+   .control-btn:hover {
+       transform: translateY(-3px);
+       box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+   }
+
+   #run-code {
+       background: linear-gradient(45deg, var(--neon-green), #00c853);
+   }
+
+   #hint-btn {
+       background: linear-gradient(45deg, #ff9800, #ff5722);
+   }
+
+   #clear-console {
+       background: linear-gradient(45deg, #2196F3, #3F51B5);
+   }
+
+   /* Achievements */
+   .achievements-section {
+       background: var(--card-bg);
+       padding: 25px;
+       border-radius: 15px;
+       border: 1px solid var(--neon-pink);
+       box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+       backdrop-filter: blur(5px);
+   }
+
+   .achievements-section h2 {
+       color: var(--neon-pink);
+       margin-bottom: 20px;
+       text-align: center;
+       text-shadow: 0 0 5px var(--neon-pink);
+       font-size: 1.8rem;
+   }
+
+   .achievements-grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+       gap: 20px;
+   }
+
+   .achievement {
+       background: rgba(0, 0, 0, 0.4);
+       border-radius: 10px;
+       padding: 15px;
+       text-align: center;
+       border: 1px solid rgba(255, 255, 255, 0.1);
+       transition: transform 0.3s, box-shadow 0.3s;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+   }
+
+   .achievement:hover {
+       transform: translateY(-5px);
+       box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+   }
+
+   .achievement.locked {
+       filter: grayscale(80%);
+       opacity: 0.7;
+   }
+
+   .achievement-icon {
+       font-size: 3rem;
+       margin-bottom: 12px;
+       color: var(--neon-yellow);
+       text-shadow: 0 0 10px var(--neon-yellow);
+   }
+
+   .achievement-title {
+       font-size: 1rem;
+       margin-bottom: 5px;
+       font-weight: bold;
+   }
+
+   .achievement-description {
+       font-size: 0.85rem;
+       color: #ccc;
+       margin-bottom: 8px;
+       flex-grow: 1;
+   }
+
+   .achievement-date {
+       font-size: 0.75rem;
+       color: #aaa;
+   }
+
+   /* Alertas */
+   .alert {
+       position: fixed;
+       top: 30px;
+       right: 30px;
+       padding: 20px 25px;
+       border-radius: 12px;
+       color: white;
+       font-weight: bold;
+       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+       z-index: 1000;
+       opacity: 0;
+       transform: translateX(100%);
+       transition: opacity 0.5s, transform 0.5s;
+       display: flex;
+       align-items: center;
+       gap: 15px;
+       max-width: 400px;
+       /* Asegura un ancho máximo */
+       backdrop-filter: blur(5px);
+       border: 1px solid;
+   }
+
+   .alert.show {
+       opacity: 1;
+       transform: translateX(0);
+   }
+
+   .alert.success {
+       background: rgba(76, 175, 80, 0.9);
+       border-color: #2E7D32;
+   }
+
+   .alert.error {
+       background: rgba(244, 67, 54, 0.9);
+       border-color: #C62828;
+   }
+
+   .alert.warning {
+       background: rgba(255, 193, 7, 0.9);
+       border-color: #F57F17;
+       color: #333;
+   }
+
+   .alert.info {
+       background: rgba(33, 150, 243, 0.9);
+       border-color: #1565C0;
+   }
+
+   .alert.boss {
+       background: linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 136, 0, 0.8));
+       border-color: #ff5500;
+   }
+
+   .alert-icon {
+       font-size: 2rem;
+   }
+
+   /* Responsive */
+   @media (max-width: 768px) {
+       .game-header {
+           flex-direction: column;
+           gap: 20px;
+       }
+
+       .progress-container {
+           width: 100%;
+           flex-shrink: 0;
+       }
+
+       .user-info {
+           width: 100%;
+           justify-content: space-between;
+           flex-shrink: 0;
+       }
+
+       .login-container {
+           padding: 25px;
+       }
+
+       /* Reordenar elementos en móviles */
+       .game-content {
+           flex-direction: column;
+       }
+
+       .theory-examples {
+           order: 1;
+           /* Teoría y ejemplos van primero */
+           flex-shrink: 0;
+           max-width: 100%;
+           word-wrap: break-word;
+           overflow-wrap: break-word;
+       }
+
+       .exercise-info {
+           order: 2;
+           /* Info del ejercicio va segundo */
+           flex-shrink: 0;
+           max-width: 100%;
+           word-wrap: break-word;
+           overflow-wrap: break-word;
+       }
+
+       .code-section {
+           order: 3;
+           /* Code section va al final */
+           flex-shrink: 0;
+           max-width: 100%;
+           word-wrap: break-word;
+           overflow-wrap: break-word;
+       }
+   }
+
+   /* Animaciones */
+   @keyframes pulse {
+       0% {
+           box-shadow: 0 0 5px #ff0000;
+       }
+
+       50% {
+           box-shadow: 0 0 25px #ff8800;
+       }
+
+       100% {
+           box-shadow: 0 0 5px #ff0000;
+       }
+   }
+
+   .neon-glow {
+       text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+   }
+
+   .level-badge {
+       display: inline-block;
+       background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+       padding: 3px 12px;
+       border-radius: 15px;
+       font-size: 0.9rem;
+       margin-left: 10px;
+   }
+
+   .concept-icon {
+       font-size: 1.5rem;
+       margin-right: 10px;
+       color: var(--neon-yellow);
+   }
+
+   /* Estilos adicionales para los nuevos botones */
+   #verify-answer {
+       background: linear-gradient(45deg, #4CAF50, #2E7D32);
+   }
+
+   #next-exercise {
+       background: linear-gradient(45deg, #FF9800, #F57C00);
+   }
+
+   #verify-answer:disabled,
+   #next-exercise:disabled {
+       opacity: 0.5;
+       cursor: not-allowed;
+       transform: none !important;
+       box-shadow: none !important;
+   }
+
+   /* ultimo */
+   .code-editor.placeholder-active {
+       color: #888;
+       /* A lighter color for placeholder text */
+       font-style: italic;
+   }
+
+   #verify-answer:disabled:hover,
+   #next-exercise:disabled:hover {
+       transform: none !important;
+       box-shadow: none !important;
+   }
+
+   /* Mejoras en el layout de controles para dispositivos móviles */
+   @media (max-width: 768px) {
+       .controls {
+           display: grid;
+           grid-template-columns: 1fr 1fr;
+           gap: 10px;
+       }
+
+       .control-btn {
+           min-width: auto;
+           padding: 12px 8px;
+           font-size: 0.9rem;
+       }
+   }
+
+   /* Nuevos estilos para usuarios guardados */
+   .saved-users {
+       margin-top: 30px;
+       padding-top: 20px;
+       border-top: 1px solid rgba(189, 0, 255, 0.3);
+   }
+
+   .saved-users h3 {
+       color: var(--neon-blue);
+       margin-bottom: 15px;
+       text-align: center;
+   }
+
+   .user-list {
+       max-height: 200px;
+       overflow-y: auto;
+   }
+
+   .user-item {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 10px;
+       background: rgba(25, 25, 60, 0.5);
+       border-radius: 8px;
+       margin-bottom: 10px;
+       border: 1px solid var(--neon-purple);
+       transition: all 0.3s;
+   }
+
+   .user-item:hover {
+       background: rgba(189, 0, 255, 0.2);
+       box-shadow: 0 0 10px rgba(189, 0, 255, 0.3);
+   }
+
+   .user-btn {
+       flex-grow: 1;
+       text-align: left;
+       background: none;
+       border: none;
+       color: var(--light-text);
+       font-size: 1.1rem;
+       cursor: pointer;
+       padding: 8px;
+       border-radius: 5px;
+   }
+
+   .user-btn:hover {
+       background: rgba(0, 247, 255, 0.1);
+   }
+
+   .delete-user {
+       background: rgba(244, 67, 54, 0.2);
+       border: 1px solid #F44336;
+       color: white;
+       border-radius: 50%;
+       width: 30px;
+       height: 30px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       cursor: pointer;
+       transition: all 0.3s;
+   }
+
+   .delete-user:hover {
+       background: rgba(244, 67, 54, 0.4);
+       transform: scale(1.1);
+   }
+
+   /* Nuevos estilos para pestañas con tamaño fijo */
+   .theory-examples {
+       background: var(--card-bg);
+       border-radius: 15px;
+       border: 1px solid var(--neon-blue);
+       box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+       margin-bottom: 20px;
+       backdrop-filter: blur(5px);
+       width: 100%;
+       /* Ancho fijo para evitar cambios de tamaño */
+       min-height: 350px;
+       /* Altura mínima fija */
+   }
+
+   .tabs {
+       display: flex;
+       border-bottom: 1px solid var(--neon-blue);
+   }
+
+   .tab-btn {
+       flex: 1;
+       padding: 12px;
+       background: rgba(10, 10, 30, 0.7);
+       border: none;
+       color: var(--light-text);
+       font-size: 1.1rem;
+       cursor: pointer;
+       transition: all 0.3s;
+       outline: none;
+   }
+
+   .tab-btn.active {
+       background: rgba(0, 247, 255, 0.3);
+       color: var(--neon-blue);
+       font-weight: bold;
+   }
+
+   .tab-btn:hover:not(.active) {
+       background: rgba(0, 247, 255, 0.1);
+   }
+
+   .tab-pane {
+       display: none;
+       padding: 15px;
+       height: 300px;
+       /* Altura fija para ambas pestañas */
+       width: 100%;
+       /* Ancho fijo */
+       overflow-y: auto;
+       padding-left: 30px;
+       box-sizing: border-box;
+       /* Incluir padding en el cálculo del tamaño */
+   }
+
+   .tab-pane.active {
+       display: block;
+   }
+
+   /* Asegurar que el contenido mantenga el mismo espaciado */
+   .tab-pane pre {
+       margin: 0;
+       white-space: pre-wrap;
+       word-wrap: break-word;
+   }
+
+   /* Mantener consistencia en el estilo del texto */
+   .tab-pane code {
+       background: rgba(0, 247, 255, 0.1);
+       padding: 2px 4px;
+       border-radius: 3px;
+       font-family: 'Courier New', monospace;
+   }
+
+
+
+   /* Efectos adicionales para mejorar la integración visual */
+   .tab-pane::-webkit-scrollbar-corner {
+       background: rgba(10, 10, 30, 0.5);
+   }
+
+   /* Animación suave para el scroll */
+   .tab-pane {
+       scroll-behavior: smooth;
+   }
+
+   /* Sombra interna para dar profundidad al contenido cuando hay scroll */
+   .tab-pane::before {
+       content: '';
+       position: sticky;
+       top: 0;
+       left: 0;
+       right: 0;
+       height: 10px;
+       background: linear-gradient(180deg,
+               rgba(0, 247, 255, 0.1) 0%,
+               transparent 100%);
+       pointer-events: none;
+       z-index: 1;
+   }
+
+   .tab-pane::after {
+       content: '';
+       position: sticky;
+       bottom: 0;
+       left: 0;
+       right: 0;
+       height: 10px;
+       background: linear-gradient(0deg,
+               rgba(0, 247, 255, 0.1) 0%,
+               transparent 100%);
+       pointer-events: none;
+       z-index: 1;
+   }
+
+   /* Agregar después de .theory-examples */
+   .theory-header {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+   }
+
+   .theory-examples .theory-header {
+       align-items: center;
+       padding: 15px 20px 0;
+       margin-bottom: 15px;
+   }
+
+   .theory-examples .exercise-title {
+       color: var(--neon-blue);
+       margin-bottom: 15px;
+       font-size: 1.8rem;
+       text-shadow: 0 0 5px var(--neon-blue);
+       display: flex;
+       align-items: center;
+       gap: 10px;
+   }
+
+
+
+   /* Confetti Animation */
+   .level-complete-celebration {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       pointer-events: none;
+       overflow: hidden;
+       z-index: 999;
+   }
+
+   .confetti {
+       position: absolute;
+       width: 10px;
+       height: 10px;
+       background-color: hsl(var(--hue, 0), 100%, 50%);
+       top: -10px;
+       animation: confetti-fall linear forwards;
+       animation-duration: var(--duration, 2s);
+       animation-delay: var(--delay, 0s);
+   }
+
+   @keyframes confetti-fall {
+       0% {
+           transform: translateY(0) rotate(0deg) scale(1);
+           opacity: 1;
+       }
+
+       100% {
+           transform: translateY(100vh) rotate(720deg) scale(0);
+           opacity: 0;
+       }
+
+   }
+
+   /* Footer Styles */
+   .main-footer {
+       background: linear-gradient(135deg,
+               rgba(10, 10, 22, 0.95) 0%,
+               rgba(25, 25, 60, 0.85) 50%,
+               rgba(10, 10, 22, 0.95) 100%);
+       color: var(--light-text);
+       text-align: center;
+       padding: 30px 20px;
+       margin-top: 50px;
+       border-top: 2px solid var(--neon-purple);
+       position: relative;
+       overflow: hidden;
+       backdrop-filter: blur(10px);
+       box-shadow:
+           0 -5px 20px rgba(189, 0, 255, 0.2),
+           inset 0 0 30px rgba(0, 247, 255, 0.1);
+   }
+
+   .main-footer::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: -100%;
+       width: 100%;
+       height: 2px;
+       background: linear-gradient(90deg,
+               transparent,
+               var(--neon-blue),
+               var(--neon-purple),
+               var(--neon-pink),
+               transparent);
+       animation: footer-glow 3s linear infinite;
+   }
+
+   @keyframes footer-glow {
+       0% {
+           left: -100%;
+       }
+
+       100% {
+           left: 100%;
+       }
+   }
+
+   .copyright-text {
+       font-size: 1.1rem;
+       margin: 0;
+       text-shadow: 0 0 5px var(--neon-blue);
+       position: relative;
+       z-index: 2;
+       background: linear-gradient(45deg,
+               var(--neon-blue),
+               var(--neon-purple),
+               var(--neon-pink));
+       -webkit-background-clip: text;
+       -webkit-text-fill-color: transparent;
+       background-clip: text;
+       animation: text-shimmer 2s ease-in-out infinite alternate;
+   }
+
+   @keyframes text-shimmer {
+       0% {
+           filter: brightness(1);
+       }
+
+       100% {
+           filter: brightness(1.3);
+       }
+   }
+
+   .main-footer::after {
+       position: absolute;
+       bottom: 5px;
+       right: 20px;
+       font-family: 'Courier New', monospace;
+       font-size: 0.8rem;
+       color: var(--neon-green);
+       opacity: 0.7;
+       text-shadow: 0 0 3px var(--neon-green);
+   }
+
+   /* Responsive footer */
+   @media (max-width: 768px) {
+       .main-footer {
+           padding: 20px 15px;
+           margin-top: 30px;
+       }
+
+       .main-footer p {
+           font-size: 1rem;
+       }
+
+       .main-footer::after {
+           font-size: 0.7rem;
+           right: 10px;
+       }
+   }
+
+   /* Estilos para los nuevos inputs de email y password */
+   .login-container input[type="email"],
+   .login-container input[type="password"] {
+       width: 80%;
+       /* O el mismo ancho que tus inputs anteriores */
+       padding: 12px;
+       margin-bottom: 15px;
+       /* Espacio entre los inputs */
+       border: 1px solid var(--neon-blue);
+       /* Ajusta según tus colores existentes */
+       border-radius: 5px;
+       background-color: var(--dark-bg);
+       /* Fondo oscuro */
+       color: var(--neon-green);
+       /* Color del texto */
+       font-size: 1em;
+       box-shadow: 0 0 8px var(--neon-blue-glow);
+       /* Efecto de brillo */
+       transition: all 0.3s ease;
+   }
+
+   .login-container input[type="email"]:focus,
+   .login-container input[type="password"]:focus {
+       outline: none;
+       border-color: var(--neon-pink);
+       /* Color de foco */
+       box-shadow: 0 0 12px var(--neon-pink-glow);
+   }
+
+   /* Estilos para el nuevo botón de registro */
+   #signup-btn {
+       width: 80%;
+       /* Similar a los otros botones */
+       padding: 12px 20px;
+       margin-top: 10px;
+       /* Espacio entre los botones */
+       background-color: var(--neon-pink);
+       /* Un color diferente para distinguirlo */
+       color: var(--text-color);
+       /* Color de texto claro */
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+       font-size: 1.1em;
+       font-weight: bold;
+       text-transform: uppercase;
+       box-shadow: 0 0 10px var(--neon-pink-glow);
+       transition: background-color 0.3s ease, box-shadow 0.3s ease;
+       display: none;
+       /* boton Oculto por defecto */
+   }
+
+   #signup-btn:hover {
+       background-color: var(--neon-purple);
+       /* Cambio de color al pasar el ratón */
+       box-shadow: 0 0 15px var(--neon-purple-glow);
+   }
+
+   /* Estilos para el enlace de administrador */
+   .admin-link {
+       margin-top: 25px;
+       /* Espacio arriba del enlace */
+       text-align: center;
+       font-size: 0.9em;
+   }
+
+   .admin-link a {
+       color: var(--neon-blue);
+       /* Color de enlace */
+       text-decoration: none;
+       /* Sin subrayado por defecto */
+       transition: color 0.3s ease, text-shadow 0.3s ease;
+   }
+
+   .admin-link a:hover {
+       color: var(--neon-green);
+       /* Cambio de color al pasar el ratón */
+       text-decoration: underline;
+       /* Subrayado al pasar el ratón */
+       text-shadow: 0 0 5px var(--neon-green-glow);
+       /* Pequeño brillo */
+   }

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyQuest - Panel de Administración</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e8e9ed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 164, 79, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(248, 81, 73, 0.08) 0%, transparent 50%);
+            animation: float 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            background: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 50%, #a5f3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.2em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            position: relative;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(88, 166, 255, 0.3));
+            }
+
+            to {
+                filter: drop-shadow(0 0 40px rgba(88, 166, 255, 0.6));
+            }
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #58a6ff, transparent);
+            border-radius: 2px;
+        }
+
+        h2 {
+            color: #79c0ff;
+            margin: 50px 0 30px 0;
+            font-size: 2.2em;
+            font-weight: 600;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 40px;
+            background: linear-gradient(135deg, #58a6ff, #79c0ff);
+            border-radius: 3px;
+        }
+
+        .alert {
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            color: #fff;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            width: 90%;
+            max-width: 500px;
+            z-index: 1010;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .alert.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .alert.success {
+            background: linear-gradient(135deg, rgba(46, 164, 79, 0.9), rgba(46, 164, 79, 0.7));
+        }
+
+        .alert.error {
+            background: linear-gradient(135deg, rgba(248, 81, 73, 0.9), rgba(248, 81, 73, 0.7));
+        }
+
+        .alert.warning {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 193, 7, 0.7));
+        }
+
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(33, 38, 45, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 3%;
+        }
+
+        .form-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .form-popup h3 {
+            color: #79c0ff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-popup label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e8e9ed;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-popup input[type="text"],
+        .form-popup input[type="email"],
+        .form-popup input[type="password"],
+        .form-popup input[type="number"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(13, 17, 23, 0.8);
+            color: #e8e9ed;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-popup input:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.2);
+            background: rgba(13, 17, 23, 1);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .form-popup input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #58a6ff;
+            cursor: pointer;
+        }
+
+        .password-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        .password-section h4 {
+            color: #79c0ff;
+            margin-bottom: 16px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .password-toggle {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #58a6ff;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            background: rgba(88, 166, 255, 0.2);
+            border-color: rgba(88, 166, 255, 0.5);
+        }
+
+        .password-inputs {
+            display: none;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .password-inputs.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .password-strength {
+            font-size: 0.85em;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .password-strength.weak {
+            background: rgba(248, 81, 73, 0.1);
+            color: #f85149;
+        }
+
+        .password-strength.medium {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .password-strength.strong {
+            background: rgba(46, 164, 79, 0.1);
+            color: #2ea44f;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2ea44f, #34d058);
+            color: white;
+            box-shadow: 0 4px 16px rgba(46, 164, 79, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #34d058, #2ea44f);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 164, 79, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #58a6ff, #79c0ff);
+            color: white;
+            box-shadow: 0 4px 16px rgba(88, 166, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #79c0ff, #58a6ff);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f85149, #ff6b6b);
+            color: white;
+            box-shadow: 0 4px 16px rgba(248, 81, 73, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ff6b6b, #f85149);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(248, 81, 73, 0.4);
+        }
+
+        .action-button {
+            display: block;
+            margin: 30px auto;
+            padding: 18px 36px;
+            font-size: 1.1em;
+            border-radius: 16px;
+            min-width: 200px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            padding: 12px 24px;
+            font-size: 0.95em;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.show {
+            opacity: 1;
+        }
+
+        .table-container {
+            background: rgba(22, 27, 34, 0.8);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: transparent;
+        }
+
+        th,
+        td {
+            padding: 20px 24px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95em;
+        }
+
+        th {
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(121, 192, 255, 0.05));
+            color: #79c0ff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85em;
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        tbody tr:hover {
+            background: rgba(88, 166, 255, 0.05);
+            transform: scale(1.005);
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: rgba(88, 166, 255, 0.08);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85em;
+            border-radius: 8px;
+            min-width: auto;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            font-size: 1.1em;
+            color: #79c0ff;
+        }
+
+        .loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid #58a6ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .admin-container {
+                margin: 10px;
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .logout-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 20px 15px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+                margin: 30px 0 20px 0;
+            }
+
+            .form-popup {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .password-inputs {
+                flex-direction: column;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            th,
+            td {
+                padding: 12px 16px;
+                font-size: 0.9em;
+                white-space: nowrap;
+            }
+
+            .table-actions {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .btn-sm {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .alert {
+                width: 95%;
+                padding: 12px 16px;
+            }
+
+            th,
+            td {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #58a6ff, #79c0ff);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #79c0ff, #58a6ff);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="alert" id="admin-alert"></div>
+
+    <div class="admin-container">
+        <div class="header">
+            <h1>PyQuest Admin</h1>
+            <button id="logout-btn" class="btn btn-danger logout-btn">🚪 Cerrar Sesión</button>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <div id="user-form-popup" class="form-popup">
+            <h3>✏️ Editar Usuario</h3>
+            <input type="hidden" id="user-id">
+
+            <div class="form-group">
+                <label for="user-email">📧 Email:</label>
+                <input type="email" id="user-email" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="user-name">👤 Nombre:</label>
+                <input type="text" id="user-name" placeholder="Nombre del usuario">
+            </div>
+
+            <div class="form-group">
+                <label for="user-current-day">📅 Día Actual:</label>
+                <input type="number" id="user-current-day" min="1" max="30" placeholder="1">
+            </div>
+
+            <div class="form-group">
+                <label for="user-unlocked-achievements">🏆 Logros Desbloqueados:</label>
+                <input type="text" id="user-unlocked-achievements" placeholder="1, 2, 3...">
+            </div>
+
+            <div class="form-group">
+                <label for="user-is-admin">⚡ Permisos de Administrador:</label>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="user-is-admin">
+                    <span>Otorgar permisos de administrador</span>
+                </div>
+            </div>
+
+            <div class="password-section">
+                <h4>🔒 Cambiar Contraseña</h4>
+                <button type="button" id="toggle-password-change" class="password-toggle">
+                    Mostrar opciones de contraseña
+                </button>
+
+                <div id="password-inputs" class="password-inputs">
+                    <div class="form-group">
+                        <label for="user-new-password">🔑 Nueva Contraseña:</label>
+                        <input type="password" id="user-new-password" placeholder="Mínimo 6 caracteres">
+                        <div id="password-strength" class="password-strength"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-confirm-password">🔐 Confirmar Nueva Contraseña:</label>
+                        <input type="password" id="user-confirm-password" placeholder="Repite la contraseña">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button id="save-user-btn" class="btn btn-primary">💾 Guardar</button>
+                <button id="cancel-user-btn" class="btn btn-danger">❌ Cancelar</button>
+            </div>
+        </div>
+
+        <div id="register-user-form-popup" class="form-popup">
+            <h3>➕ Registrar Nuevo Usuario</h3>
+
+            <div class="form-group">
+                <label for="register-email">📧 Email:</label>
+                <input type="email" id="register-email" placeholder="usuario@ejemplo.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-password">🔒 Contraseña:</label>
+                <input type="password" id="register-password" placeholder="Contraseña segura" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-name">👤 Nombre (opcional):</label>
+                <input type="text" id="register-name" placeholder="Nombre completo">
+            </div>
+
+            <div class="form-buttons">
+                <button id="register-new-user-btn" class="btn btn-primary">🎉 Registrar</button>
+                <button id="cancel-register-btn" class="btn btn-danger">❌ Cancelar</button>
+            </div>
+        </div>
+
+        <button id="add-user-btn" class="btn btn-secondary action-button">➕ Añadir Nuevo Usuario</button>
+
+        <section>
+            <h2>👥 Gestión de Usuarios</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>🆔 ID</th>
+                            <th>📧 Email</th>
+                            <th>👤 Nombre</th>
+                            <th>📅 Día Actual</th>
+                            <th>🏆 Logros</th>
+                            <th>⚡ Admin</th>
+                            <th>📊 Creado</th>
+                            <th>⚙️ Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-table-body">
+                        <tr>
+                            <td colspan="8" class="loading">Cargando usuarios</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
