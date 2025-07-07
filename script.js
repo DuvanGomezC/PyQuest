@@ -2836,6 +2836,15 @@ function validatePattern(pattern, userCode, userOutput) {
 			return validateForLoop(pattern, userCode);
 		case 'expected_output':
 			return validateExpectedOutput(pattern, userOutput);	
+
+        case 'dictionary_access':
+            return validateDictionaryAccess(pattern, userCode);
+            
+        case 'dictionary_modification':
+            return validateDictionaryModification(pattern, userCode);
+            
+        case 'output_contains':
+            return validateOutputContains(pattern, userOutput);    
             
         default:
             return { isValid: true }; // Patrón no reconocido, asumir válido
@@ -2858,23 +2867,92 @@ function validateOutputMatch(rules, userOutput) {
     return { isCorrect: true };
 }
 
+// Validar acceso a diccionario (ej: persona['edad'])
+function validateDictionaryAccess(pattern, userCode) {
+    const varName = pattern.variable;
+    const key = pattern.key;
+    
+    // Buscar acceso con corchetes - acepta tanto comillas simples como dobles
+    const accessRegex = new RegExp(`${varName}\\s*\\[\\s*['"]*${key}['"]*\\s*\\]`);
+    
+    if (!accessRegex.test(userCode)) {
+        return { 
+            isValid: false, 
+            message: `Debes acceder a la clave '${key}' del diccionario '${varName}' usando ${varName}['${key}']` 
+        };
+    }
+    
+    return { isValid: true };
+}
+
+// Validar modificación de diccionario (añadir o cambiar valores)
+function validateDictionaryModification(pattern, userCode) {
+    const varName = pattern.variable;
+    
+    if (pattern.add_key && pattern.add_value !== undefined) {
+        // Validar que se añade una nueva clave
+        const addKey = pattern.add_key;
+        const addValue = pattern.add_value;
+        
+        const addRegex = new RegExp(`${varName}\\s*\\[\\s*['"]*${addKey}['"]*\\s*\\]\\s*=\\s*${addValue}`);
+        
+        if (!addRegex.test(userCode)) {
+            return { 
+                isValid: false, 
+                message: `Debes añadir la clave '${addKey}' con valor ${addValue} al diccionario '${varName}'` 
+            };
+        }
+    }
+    
+    if (pattern.modify_key && pattern.new_value !== undefined) {
+        // Validar que se modifica una clave existente
+        const modifyKey = pattern.modify_key;
+        const newValue = pattern.new_value;
+        
+        const modifyRegex = new RegExp(`${varName}\\s*\\[\\s*['"]*${modifyKey}['"]*\\s*\\]\\s*=\\s*${newValue}`);
+        
+        if (!modifyRegex.test(userCode)) {
+            return { 
+                isValid: false, 
+                message: `Debes modificar la clave '${modifyKey}' del diccionario '${varName}' con el valor ${newValue}` 
+            };
+        }
+    }
+    
+    return { isValid: true };
+}
+
 // NUEVA FUNCIÓN: Validar salida de diccionario
 function validateDictionaryOutput(rules, userOutput) {
     const expectedKeys = rules.expected_keys || [];
     const expectedValues = rules.expected_values || {};
+    const allowPartialMatch = rules.allow_partial_match || false;
     
     try {
         // Intentar extraer el diccionario de la salida
         let dictString = userOutput.trim();
         
-        // Si la salida contiene texto adicional, intentar extraer solo el diccionario
-        const dictMatch = dictString.match(/\{[^}]+\}/);
-        if (dictMatch) {
-            dictString = dictMatch[0];
+        // Si hay múltiples líneas, buscar la línea que contiene el diccionario
+        const lines = dictString.split('\n');
+        let foundDict = null;
+        
+        for (const line of lines) {
+            const dictMatch = line.match(/\{[^}]+\}/);
+            if (dictMatch) {
+                foundDict = dictMatch[0];
+                break;
+            }
+        }
+        
+        if (!foundDict) {
+            return {
+                isCorrect: false,
+                message: `No se encontró un diccionario válido en la salida. Asegúrate de imprimir el diccionario.`
+            };
         }
         
         // Convertir formato Python a JSON válido
-        let jsonString = dictString
+        let jsonString = foundDict
             .replace(/'/g, '"')  // Comillas simples a dobles
             .replace(/True/g, 'true')  // Boolean Python a JSON
             .replace(/False/g, 'false')  // Boolean Python a JSON
@@ -2888,7 +2966,7 @@ function validateDictionaryOutput(rules, userOutput) {
             if (!(expectedKey in userDict)) {
                 return {
                     isCorrect: false,
-                    message: `Falta la palabra '${expectedKey}' en tu diccionario`
+                    message: `Falta la clave '${expectedKey}' en tu diccionario`
                 };
             }
         }
@@ -2898,19 +2976,21 @@ function validateDictionaryOutput(rules, userOutput) {
             if (userDict[key] !== expectedValue) {
                 return {
                     isCorrect: false,
-                    message: `La palabra '${key}' debe aparecer ${expectedValue} veces, pero tu resultado muestra ${userDict[key]} veces`
+                    message: `La clave '${key}' debe tener el valor ${expectedValue}, pero tu resultado muestra ${userDict[key]}`
                 };
             }
         }
         
-        // Verificar que no haya claves extra (opcional, pero recomendado)
-        const userKeys = Object.keys(userDict);
-        const extraKeys = userKeys.filter(key => !expectedKeys.includes(key));
-        if (extraKeys.length > 0) {
-            return {
-                isCorrect: false,
-                message: `Tu diccionario contiene palabras no esperadas: ${extraKeys.join(', ')}`
-            };
+        // Verificar que no haya claves extra (a menos que se permita coincidencia parcial)
+        if (!allowPartialMatch) {
+            const userKeys = Object.keys(userDict);
+            const extraKeys = userKeys.filter(key => !expectedKeys.includes(key));
+            if (extraKeys.length > 0) {
+                return {
+                    isCorrect: false,
+                    message: `Tu diccionario contiene claves no esperadas: ${extraKeys.join(', ')}`
+                };
+            }
         }
         
         return { isCorrect: true };
