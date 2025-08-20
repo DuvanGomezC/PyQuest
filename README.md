@@ -11,7 +11,7 @@
 
 **PyQuest es una plataforma web interactiva y gamificada que te guía paso a paso para dominar Python desde cero, combinando teoría, práctica y motivación a través de logros y retos diarios.**
 
-[Demo en Vivo](https://pyquest-mai4.onrender.com/index.html) • [Reportar Bug](https://github.com/tu-usuario/PyQuest/issues) • [Solicitar Feature](https://github.com/tu-usuario/PyQuest/issues)
+[Demo en Vivo](https://pyquest-mai4.onrender.com/index.html) • [Reportar Bug](https://github.com/DuvanGomezC/PyQuest/issues) • [Solicitar Feature](https://github.com/DuvanGomezC/PyQuest/issues)
 
 </div>
 
