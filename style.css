@@ -72,17 +72,19 @@
        scroll-behavior: smooth;
    }
 
-   body {
-       background-color: var(--dark-bg);
-       color: var(--light-text);
-       line-height: 1.6;
-       min-height: 100vh;
-       background-image:
-           radial-gradient(circle at top right, rgba(189, 0, 255, 0.1), transparent 25%),
-           radial-gradient(circle at bottom left, rgba(0, 247, 255, 0.1), transparent 25%),
-           linear-gradient(to bottom, #0a0a16, #050510);
-       background-attachment: fixed;
-   }
+	body {
+		background-color: var(--dark-bg);
+		color: var(--light-text);
+		line-height: 1.6;
+		min-height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+		display: flex; /* La clave: lo convierte en un contenedor flexbox */
+		flex-direction: column; /* Apila los hijos (login, game, footer) verticalmente */
+		background-image:
+			radial-gradient(circle at top right, rgba(189, 0, 255, 0.1), transparent 25%),
+			radial-gradient(circle at bottom left, rgba(0, 247, 255, 0.1), transparent 25%),
+			linear-gradient(to bottom, #0a0a16, #050510);
+		background-attachment: fixed;
+	}
 
    .container {
        max-width: 1200px;
@@ -92,15 +94,15 @@
 
    /* Login Page */
    .login-page {
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       min-height: 100vh;
-       text-align: center;
-       background-image:
-           radial-gradient(circle at center, rgba(0, 247, 255, 0.05), transparent 70%),
-           radial-gradient(circle at 20% 80%, rgba(189, 0, 255, 0.05), transparent 50%);
-   }
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-grow: 1; /* Esta es la propiedad que empuja el footer hacia abajo */
+		text-align: center;
+		background-image:
+			radial-gradient(circle at center, rgba(0, 247, 255, 0.05), transparent 70%),
+			radial-gradient(circle at 20% 80%, rgba(189, 0, 255, 0.05), transparent 50%);
+	}
 
    .login-container {
        background: var(--card-bg);
@@ -1120,23 +1122,23 @@
    }
 
    /* Footer Styles */
-   .main-footer {
-       background: linear-gradient(135deg,
-               rgba(10, 10, 22, 0.95) 0%,
-               rgba(25, 25, 60, 0.85) 50%,
-               rgba(10, 10, 22, 0.95) 100%);
-       color: var(--light-text);
-       text-align: center;
-       padding: 30px 20px;
-       margin-top: 50px;
-       border-top: 2px solid var(--neon-purple);
-       position: relative;
-       overflow: hidden;
-       backdrop-filter: blur(10px);
-       box-shadow:
-           0 -5px 20px rgba(189, 0, 255, 0.2),
-           inset 0 0 30px rgba(0, 247, 255, 0.1);
-   }
+.main-footer {
+    background: linear-gradient(135deg,
+                rgba(10, 10, 22, 0.95) 0%,
+                rgba(25, 25, 60, 0.85) 50%,
+                rgba(10, 10, 22, 0.95) 100%);
+    color: var(--light-text);
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: auto; /* Esta propiedad ahora funciona correctamente */
+    border-top: 2px solid var(--neon-purple);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 -5px 20px rgba(189, 0, 255, 0.2),
+        inset 0 0 30px rgba(0, 247, 255, 0.1);
+}
 
    .main-footer::before {
        content: '';
