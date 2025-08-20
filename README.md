@@ -7,11 +7,11 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://dashboard.render.com/)
 
 **PyQuest es una plataforma web interactiva y gamificada que te guía paso a paso para dominar Python desde cero, combinando teoría, práctica y motivación a través de logros y retos diarios.**
 
-[Demo en Vivo](https://pyquest-demo.netlify.app) • [Reportar Bug](https://github.com/tu-usuario/PyQuest/issues) • [Solicitar Feature](https://github.com/tu-usuario/PyQuest/issues)
+[Demo en Vivo](https://pyquest-mai4.onrender.com/index.html) • [Reportar Bug](https://github.com/tu-usuario/PyQuest/issues) • [Solicitar Feature](https://github.com/tu-usuario/PyQuest/issues)
 
 </div>
 
@@ -26,7 +26,7 @@ PyQuest es un entorno educativo integral para aprender Python en 30 días, pensa
 - **Sistema de logros y gamificación** para mantener la motivación.
 - **Panel de administración** para docentes y seguimiento de estudiantes.
 
-La plataforma es 100% web, no requiere instalación y puede desplegarse fácilmente en Netlify u otros servicios estáticos.
+La plataforma es 100% web, no requiere instalación y puede desplegarse fácilmente en Render u otros servicios estáticos.
 
 ---
 
@@ -53,7 +53,7 @@ La plataforma es 100% web, no requiere instalación y puede desplegarse fácilme
 - **Frontend**: HTML5, CSS3 (tema neon), JavaScript puro, CodeMirror (editor de código)
 - **Backend/BaaS**: Supabase (autenticación, base de datos PostgreSQL, funciones serverless)
 - **Ejecución de Python**: Pyodide (corre Python real en el navegador)
-- **Despliegue**: Netlify (hosting estático y CI/CD)
+- **Despliegue**: Render 
 - **Control de versiones**: Git
 
 ---
@@ -63,7 +63,7 @@ La plataforma es 100% web, no requiere instalación y puede desplegarse fácilme
 ### Requisitos Previos
 - Navegador web moderno
 - Cuenta en [Supabase](https://supabase.com)
-- Cuenta en [Netlify](https://netlify.com) (opcional para despliegue)
+- Cuenta en [Render](https://dashboard.render.com/) (opcional para despliegue)
 - Git instalado
 
 ### 1. Clona el repositorio
@@ -99,10 +99,12 @@ python -m http.server 8000
 # Visita http://localhost:8000
 ```
 
-### 5. Despliegue en Netlify
-- Conecta tu repo a Netlify o arrastra la carpeta de build.
-- Si usas variables de entorno, configura el build para ejecutar `node generate-config.js` antes del build.
-- Asegúrate de que `config.js` esté presente en la carpeta final del deploy.
+### 5. Despliegue en Render
+- Conecta tu repositorio a Render. Render se integra directamente con GitHub, GitLab y Bitbucket, o puedes crear un sitio estático arrastrando y soltando tu carpeta de build.
+
+- Configura las variables de entorno. En el panel de Render, añade tus variables de entorno. Render las inyecta automáticamente durante el proceso de despliegue. No es necesario ejecutar un script adicional.
+
+- Verifica la configuración del build. Render detecta automáticamente el entorno de tu proyecto. Asegúrate de que el comando de build apunte a la carpeta correcta de tu aplicación. Render no requiere un archivo config.js en tu carpeta final, ya que gestiona las variables por sí solo.
 
 ---
 
